@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:myshop/ui/products/user_products_screen.dart';
 import 'ui/products/products_manager.dart';
 import 'ui/products/product_detail_screen.dart';
+import 'ui/products/product_overview_screen.dart';
 
 
 void main() {
@@ -28,13 +30,23 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
+      //B1
       // home: Container(
       //   color: Colors.green,
       // ),
-      home: SafeArea(
-        child: ProductDetailScreen(
-          ProductsManager().items[0],
-        ),
+      //B2
+      // home: SafeArea(
+      //   child: ProductDetailScreen(
+      //     ProductsManager().items[0],
+      //   ),
+      // ),
+      //B3
+      // home: const SafeArea(
+      //   child: ProductsOverviewScreen(),
+      // ),
+      //B4
+      home: const SafeArea(
+        child: UserProductsScreen(),
       ),
     );
   }
