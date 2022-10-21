@@ -1,26 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:myshop/ui/cart/cart_screen.dart';
-import 'package:myshop/ui/shared/app_drawer.dart';
+import 'package:provider/provider.dart';
+
+import '../shared/app_drawer.dart';
 
 import 'products_grid.dart';
 
 import '../cart/cart_manager.dart';
 import 'top_right_badge.dart';
 
-enum FilterOptions { favorites, all}
+enum FilterOptions { favorites, all }
 
 class ProductsOverviewScreen extends StatefulWidget {
   const ProductsOverviewScreen({super.key});
 
   @override
-  State <ProductsOverviewScreen> createState() => _ProductsOverviewScreenState();
+  State<ProductsOverviewScreen> createState() => _ProductsOverviewScreenState();
 }
 
-class _ProductsOverviewScreenState extends State <ProductsOverviewScreen> {
+class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   var _showOnlyFavorites = false;
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('MyShop'),
@@ -34,27 +36,31 @@ class _ProductsOverviewScreenState extends State <ProductsOverviewScreen> {
     );
   }
 
-  Widget buildShoppingCartIcon(){
-    return TopRightBadge(
-      data: CartManager().productCount,
-      child: IconButton(
-        icon: const Icon(
-          Icons.shopping_cart,
-      ),
-      onPressed: (){
-        Navigator.of(context).pushNamed(CartScreen.routeName);
+  Widget buildShoppingCartIcon() {
+    return Consumer<CartManager>(
+      builder: (ctx, cartManager, child) {
+        return TopRightBadge(
+          data: cartManager.productCount,
+          child: IconButton(
+            icon: const Icon(
+              Icons.shopping_cart,
+            ),
+            onPressed: () {
+              Navigator.of(ctx).pushNamed(CartScreen.routeName);
+            },
+          ),
+        );
       },
-    ),
     );
   }
 
-  Widget buildProductFilterMenu(){
+  Widget buildProductFilterMenu() {
     return PopupMenuButton(
-      onSelected: (FilterOptions selectedValue){
+      onSelected: (FilterOptions selectedValue) {
         setState(() {
-          if (selectedValue == FilterOptions.favorites){
-            _showOnlyFavorites =true;
-          }else{
+          if (selectedValue == FilterOptions.favorites) {
+            _showOnlyFavorites = true;
+          } else {
             _showOnlyFavorites = false;
           }
         });
